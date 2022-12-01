@@ -1,4 +1,4 @@
-export const getItemtemplate = ({
+export const getItemTemplate = ({
   name,
   capital,
   population,
@@ -20,14 +20,14 @@ export const getItemtemplate = ({
   <p><span class="span-info">Languages:</span> ${Object.values(languages)}</p>
 `;
 
-export const getItemtemplateAll = ({ name, flags }) =>
+export const getItemTemplateAll = ({ name, flags }) =>
   `
   <li class="country-item">
     <span class="icon-flag">
       <img
-        src="${flags.svg}"
+        src="${flags.png}"
         alt="${name.official}"
-        width="30px"
+        width="25px"
         height="15px"
       /> </span
     >${name.official}
