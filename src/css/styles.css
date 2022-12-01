@@ -10,6 +10,16 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+
+  background-image: -webkit-repeating-radial-gradient(
+    center center,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 0.5px,
+    transparent 3px,
+    transparent 100%
+  );
+
+  background-size: 30px 30px;
 }
 
 #search-box {
@@ -27,4 +37,7 @@ body {
 
 .link {
   text-decoration: none;
+}
+
+.dotted {
 }

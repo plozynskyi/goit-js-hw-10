@@ -2,7 +2,7 @@ import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
 
-const getItemtemplate = ({ name, capital, population, flags, languages }) =>
+const getItemtemplateAll = ({ name, capital, population, flags, languages }) =>
   `<li>
   <p>
     <span class="icon-flag">
@@ -12,11 +12,25 @@ const getItemtemplate = ({ name, capital, population, flags, languages }) =>
         width="30px"
         height="20px"
       /> </span
-    ><b>${name.official}
+    >${name.official}
   </p>
-  <p><b>Capital: ${capital}</p>
-  <p><b>Population: ${population}</p>
-  <p><b>Languages: ${languages}</p>
+  <p>Capital: ${capital}</p>
+  <p>Population: ${population}</p>
+  <p>Languages: ${Object.values(languages)}</p>
+</li>
+`;
+
+const getItemtemplate = ({ name, flags }) =>
+  `<li>
+  <p>
+    <span class="icon-flag">
+      <img
+        src="${flags.svg}"
+        alt="${name.official}"
+        width="30px"
+        height="20px"
+      /> </span
+    >${name.official}
 </li>
 `;
 
@@ -30,24 +44,42 @@ const refs = {
 
 refs.input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
-function onInput(e) {
-  e.preventDefault();
-  let inputCountryName = refs.input.value;
-
-  console.log(refs.input.value);
-
-  fetchCountry(inputCountryName).then(renderCountry).catch(onFechError);
-  // .finally(() => (refs.countryList.innerHTML = ''));
-
-  function fetchCountry(inputCountryName) {
-    return fetch(`${URL}/name/${inputCountryName}`).then(respons => {
-      return respons.json();
-    });
-  }
+function fetchCountry(inputCountryName) {
+  return fetch(`${URL}/name/${inputCountryName}`).then(respons => {
+    return respons.json();
+  });
 }
 
+function onInput(e) {
+  let inputCountryName = refs.input.value.trim();
+
+  inputCountryName
+    ? fetchCountry(inputCountryName)
+        .then(items => {
+          items.length > Number(10)
+            ? Notify.failure(
+                `Too many matches found. Please enter a more specific name.`,
+                {
+                  timeout: 2000,
+                }
+              )
+            : renderCountry(items);
+        })
+        .catch(onFechError)
+    : onFechError;
+
+  refs.countryList.innerHTML = '';
+
+  console.log(refs.input.value);
+}
+let items = [];
+
 function renderCountry(items) {
-  let list = items.map(getItemtemplate);
+  let list =
+    items.length > Number(1)
+      ? items.map(getItemtemplate)
+      : items.map(getItemtemplateAll);
+
   refs.countryList.innerHTML = '';
   refs.countryList.insertAdjacentHTML('beforeend', list.join(''));
 }
