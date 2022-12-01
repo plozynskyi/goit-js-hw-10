@@ -20,6 +20,7 @@ body {
   );
 
   background-size: 30px 30px;
+  padding: 15px;
 }
 
 #search-box {
@@ -37,4 +38,22 @@ body {
 
 .link {
   text-decoration: none;
+}
+
+.country-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.country-name {
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.span-info {
+  font-family: Helvetica Neue, sans-serif;
+  font-weight: 600;
 }
