@@ -15,7 +15,7 @@ const getItemtemplateAll = ({ name, capital, population, flags, languages }) =>
     >${name.official}
   </p>
   <p>Capital: ${capital}</p>
-  <p>Population: ${population}</p>
+  <p>Population: ${population.toLocaleString()}</p>
   <p>Languages: ${Object.values(languages)}</p>
 </li>
 `;
